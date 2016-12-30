@@ -36,6 +36,7 @@ public class Game : MonoBehaviour {
 
 	public void GoToService() {
 		Congregation.s.Members();
+		Service.s.BeginService();
 		foreach(GameObject g in panels) g.SetActive(false);
 		servicePanel.SetActive(true);
 	}

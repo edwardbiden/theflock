@@ -6,6 +6,7 @@ public class Person {
 	public float age;
 	public string gender;
 	public string name;
+	public int wealth;
 	private string[] malenames = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 	private string[] femalenames = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 	private string[] surnames = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
@@ -24,6 +25,7 @@ public class Person {
 		name = namelookup[Random.Range(0,namelookup.Length)];
 		name += surnames[Random.Range(0,surnames.Length)];
 		name += surnames[Random.Range(0,surnames.Length)];
+		wealth = Random.Range(1,11);
 
 		charity = Values();
 		community = Values();
@@ -36,10 +38,10 @@ public class Person {
 
 	float[] Values() {
 		float[] value = new float[2];
-		float one = Random.Range(0,1f);
-		float two = Random.Range(0,1f);
-		value[0] = Mathf.Min(one, two);
-		value[1] = Mathf.Max(one,two);
+		float one = Random.Range(0,0.8f);
+		float two = Random.Range(0.8f,1.5f);
+		value[0] = one;
+		value[1] = Mathf.Min(1f,two);
 		return value;
 	}
 }
