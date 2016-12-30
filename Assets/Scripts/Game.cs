@@ -9,6 +9,7 @@ public class Game : MonoBehaviour {
 	public GameObject churchPanel;
 	public GameObject officePanel;
 	public GameObject servicePanel;
+	public GameObject phonePanel;
 	public GameObject[] panels;
 
 	void Awake () {
@@ -28,19 +29,26 @@ public class Game : MonoBehaviour {
 	}
 
 	public void GoToOffice() {
+		Office.s.BeginWeek();
 		foreach(GameObject g in panels) g.SetActive(false);
 		officePanel.SetActive(true);
 	}
 
 	public void GoToService() {
+		Congregation.s.Members();
 		foreach(GameObject g in panels) g.SetActive(false);
 		servicePanel.SetActive(true);
 	}
 
 	public void GoToChurch() {
-		Church.s.UpdateText();
+		Church.s.Refresh();
 		foreach(GameObject g in panels) g.SetActive(false);
 		churchPanel.SetActive(true);
+	}
+
+	public void GoToPhone() {
+		foreach(GameObject g in panels) g.SetActive(false);
+		phonePanel.SetActive(true);
 	}
 
 	public void OpenMenu() {

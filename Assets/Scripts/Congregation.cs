@@ -16,6 +16,7 @@ public class Congregation : MonoBehaviour {
 		for(int i = 0; i < size; i++) {
 			Person thisPerson = new Person();
 			thisPerson.id = i;
+			thisPerson.awareness = i/size;
 			population[i] = thisPerson;
 		}
 	}
@@ -27,7 +28,8 @@ public class Congregation : MonoBehaviour {
 				Church.s.community >= p.community[0] && Church.s.community <= p.community[1] &&
 				Church.s.family >= p.family[0] && Church.s.family <= p.family[1] &&
 				Church.s.piety >= p.piety[0] && Church.s.piety <= p.piety[1] &&
-				Church.s.tolerance >= p.tolerance[0] && Church.s.tolerance <= p.tolerance[1]) {
+				Church.s.tolerance >= p.tolerance[0] && Church.s.tolerance <= p.tolerance[1] &&
+				Church.s.awareness >= p.awareness) {
 				members.Add(p);
 			}
 		}

@@ -8,16 +8,17 @@ public class Church : MonoBehaviour {
 	public int value;
 	public int halos;
 	public float awareness;
-
 	public float charity;
 	public float community;
 	public float family;
 	public float piety;
 	public float tolerance;
 
+	// UI elements
 	public Text cashText;
 	public Text congregationText;
 	public Text halosText;
+
 
 	void Awake () {
 		s = this;
@@ -36,9 +37,10 @@ public class Church : MonoBehaviour {
 		tolerance = 0.5f;
 	}
 
-	public void UpdateText() {
+	public void Refresh() {
 		cashText.text = "Cash: " + cash.ToString();
 		congregationText.text = "Congregation: " + Congregation.s.members.Count.ToString();
 		halosText.text = "Good deeds: " + halos.ToString();
 	}
+
 }
