@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class Office : MonoBehaviour {
@@ -11,9 +12,9 @@ public class Office : MonoBehaviour {
 	// UI elements
 	public Text todayText;
 	public Text feedback;
+	public Text phoneText;
 	public Button[] actionButtons;
 	public Button proceed;
-
 
 	void Awake () {
 		s = this;
@@ -23,13 +24,13 @@ public class Office : MonoBehaviour {
 		dayOfWeek = 0;
 		today = weekdays[dayOfWeek];
 		todayText.text = today;
+		Phone.s.todayText.text = today;
 		feedback.text = "";
+		Phone.s.messageNum = Random.Range(1,4);
+		phoneText.text = "Phone (" + Phone.s.messageNum.ToString() + ")";
+		Phone.s.Generate();
 		foreach(Button b in actionButtons) b.interactable = true;
 		proceed.interactable = false;
-	}
-
-	public void Phone() {
-		NewAction();
 	}
 
 	public void Tea() {
@@ -40,8 +41,8 @@ public class Office : MonoBehaviour {
 
 	public void TV() {
 		NewAction();
-		Church.s.tolerance += 0.02f;
-		feedback.text = "tolerance ++";
+		Church.s.moral += 0.02f;
+		feedback.text = "moral ++";
 	}
 
 	public void Bible() {
@@ -61,7 +62,9 @@ public class Office : MonoBehaviour {
 		dayOfWeek++;
 		today = weekdays[dayOfWeek];
 		todayText.text = today;
+		Phone.s.todayText.text = today;
 		if(dayOfWeek == 5) foreach(Button b in actionButtons) b.interactable = false;
+		if(dayOfWeek == 5) foreach(KeyValuePair<int, Message> myMessage in Phone.s.allMessages) Phone.s.allMessages[myMessage.Key].button.interactable = false;
 		proceed.interactable = true;
 	}
 }

@@ -10,6 +10,7 @@ public class Game : MonoBehaviour {
 	public GameObject officePanel;
 	public GameObject servicePanel;
 	public GameObject phonePanel;
+	public GameObject messagePanel;
 	public GameObject[] panels;
 
 	void Awake () {
@@ -34,6 +35,11 @@ public class Game : MonoBehaviour {
 		officePanel.SetActive(true);
 	}
 
+	public void GoBackToOffice() {
+		foreach(GameObject g in panels) g.SetActive(false);
+		officePanel.SetActive(true);
+	}
+
 	public void GoToService() {
 		Congregation.s.Members();
 		Service.s.BeginService();
@@ -50,6 +56,11 @@ public class Game : MonoBehaviour {
 	public void GoToPhone() {
 		foreach(GameObject g in panels) g.SetActive(false);
 		phonePanel.SetActive(true);
+	}
+
+	public void GoToMessage() {
+		foreach(GameObject g in panels) g.SetActive(false);
+		messagePanel.SetActive(true);
 	}
 
 	public void OpenMenu() {
