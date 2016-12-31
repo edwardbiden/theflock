@@ -32,9 +32,7 @@ public class Phone : MonoBehaviour {
 
 	public void Generate () {
 		foreach(GameObject g in startingMessages) Destroy(g);
-		for(int i = 0; i < Phone.s.allMessages.Count; i++) {
-			Destroy(Phone.s.allMessages[i].me);
-		}
+		foreach(KeyValuePair<int, Message> myMessage in Phone.s.allMessages) Destroy(Phone.s.allMessages[myMessage.Key].me);
 		allMessages = new Dictionary<int, Message>();
 		int count = 0;
 		while(count < messageNum) {

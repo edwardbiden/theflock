@@ -29,15 +29,15 @@ public class Person {
 		moral = Values();
 		piety = Values();
 
-		Debug.Log(name + " " + gender + ":" + age.ToString("0") + "community: " + community[0].ToString() + "-" + community[1].ToString() + "; community: " + community[0].ToString() + "-" + community[1].ToString());
+		Debug.Log(name + " " + gender + ":" + age.ToString("0") + "community: " + community[0].ToString("0.00") + "-" + community[1].ToString("0.00") + "; moral: " + moral[0].ToString("0.00") + "-" + moral[1].ToString("0.00"));
 	} 
 
 	float[] Values() {
 		float[] value = new float[2];
-		float one = Random.Range(0,0.8f);
-		float two = Random.Range(0.8f,1.5f);
-		value[0] = one;
-		value[1] = Mathf.Min(1f,two);
+		float one = Random.Range(0,1f);
+		float two = Random.Range(0,1f);
+		value[0] = Mathf.Min(one,two);
+		value[1] = Mathf.Max(one,two);
 		return value;
 	}
 }

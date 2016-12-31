@@ -29,32 +29,33 @@ public class Office : MonoBehaviour {
 		Phone.s.messageNum = Random.Range(1,4);
 		phoneText.text = "Phone (" + Phone.s.messageNum.ToString() + ")";
 		Phone.s.Generate();
+		Service.s.sermonEffectiveness = 1;
 		foreach(Button b in actionButtons) b.interactable = true;
 		proceed.interactable = false;
 	}
 
 	public void Tea() {
 		NewAction();
-		Church.s.community += 0.02f;
-		feedback.text = "community ++";
+		Church.s.awareness += 0.01f;
+		feedback.text = "Awareness + 1%";
 	}
 
 	public void TV() {
 		NewAction();
-		Church.s.moral += 0.02f;
-		feedback.text = "moral ++";
+		Service.s.sermonEffectiveness += Random.Range(0,0.1f);
+		int effectivenessShown = Mathf.FloorToInt(Service.s.sermonEffectiveness * 100);
+		feedback.text = "collection effectiveness: " + effectivenessShown.ToString() + "%";
 	}
 
 	public void Bible() {
 		NewAction();
-		Church.s.piety += 0.02f;
-		feedback.text = "piety ++";
+		feedback.text = "you are feeling very devout";
 	}
 
 	public void Hospital() {
 		NewAction();
-		Church.s.awareness += 0.02f;
-		feedback.text = "awareness ++";
+		Church.s.halos += 1;
+		feedback.text = "good deeds +1";
 	}
 
 	public void NewAction() {

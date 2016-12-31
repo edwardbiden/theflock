@@ -17,7 +17,7 @@ public class Church : MonoBehaviour {
 
 	// UI elements
 	public Text cashText;
-	public Text congregationText;
+	public Text capacityText;
 	public Text halosText;
 	public Text awarenessText;
 	public Button capacityButton;
@@ -46,7 +46,7 @@ public class Church : MonoBehaviour {
 
 	public void Refresh() {
 		cashText.text = "Cash: " + cash.ToString();
-		congregationText.text = "Congregation: " + Congregation.s.members.Count.ToString();
+		capacityText.text = "Capacity: " + capacity.ToString();
 		halosText.text = "Good deeds: " + halos.ToString();
 		int awarenessPercent = Mathf.FloorToInt(awareness * 100);
 		awarenessText.text = "Awareness: " + awarenessPercent.ToString() + "%";

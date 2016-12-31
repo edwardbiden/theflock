@@ -24,7 +24,7 @@ public class Game : MonoBehaviour {
 
 	public void NewGame() {
 		Church.s.Generate();
-		Congregation.s.Generate(100);
+		Congregation.s.Generate();
 		Congregation.s.Members();
 		GoToChurch();
 	}

@@ -10,6 +10,7 @@ public class Service : MonoBehaviour {
 	private int pews;
 	public float length;
 	private int maxCongregation;
+	public float sermonEffectiveness;
 
 	// UI elements
 	public GameObject pewPanel;
@@ -45,8 +46,11 @@ public class Service : MonoBehaviour {
 			pews++;
 			yield return new WaitForSeconds(0.05f);
 		}
-		Church.s.cash += collection;
-		feedback.text = "Collection: $" + collection.ToString();
+		int finalCollection = Mathf.FloorToInt(collection * sermonEffectiveness);
+		Church.s.cash += finalCollection;
+		feedback.text = "Collection: $" + finalCollection.ToString();
+		int seatsEmpty = Mathf.Max(Church.s.capacity - Congregation.s.members.Count, 0);
+		feedback.text += "\n" + seatsEmpty.ToString() + " pews empty";
 		proceed.interactable = true;
 	}
 
