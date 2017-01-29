@@ -57,13 +57,13 @@ public class Phone : MonoBehaviour {
 	public void pressA() {
 		switch(type) {
 		case 0:
-			Church.s.community += 0.05f;
+			Church.s.social += 0.05f;
 			break;
 		case 1: 
-			Church.s.moral += 0.05f;
+			Church.s.financial += 0.05f;
 			break;
 		case 2:
-			Church.s.piety += 0.05f;
+			Church.s.dogmatic += 0.05f;
 			break;
 		}
 		confirmPanel.SetActive(true);
@@ -73,13 +73,13 @@ public class Phone : MonoBehaviour {
 	public void pressB() {
 		switch(type) {
 		case 0:
-			Church.s.community -= 0.05f;
+			Church.s.social -= 0.05f;
 			break;
 		case 1: 
-			Church.s.moral -= 0.05f;
+			Church.s.financial -= 0.05f;
 			break;
 		case 2:
-			Church.s.piety -= 0.05f;
+			Church.s.dogmatic -= 0.05f;
 			break;
 		}
 		confirmPanel.SetActive(true);

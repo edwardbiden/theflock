@@ -5,69 +5,70 @@ using System.Collections.Generic;
 
 public class Congregation : MonoBehaviour {
 	public static Congregation s;
-	public Person[] population;
+	public List<Person> population;
 	public List<Person> members;
-	public int size = 100;
+	public int size;
 
-	public float moreCommunity;
-	public float lessCommunity;
-	public float moreMoral;
-	public float lessMoral;
-	public float morePiety;
-	public float lessPiety;
+	public float dogmatic;
+	public float material;
+	public float social;
+	public float financial;
+	public float health;
+	public float spiritual;
 
 	// UI elements
-	public Image moreCommunityImage;
-	public Image lessCommunityImage;
-	public Image moreMoralImage;
-	public Image lessMoralImage;
-	public Image morePietyImage;
-	public Image lessPietyImage;
+	public Image dogmaticImageChurch;
+	public Image dogmaticImageCongregation;
+	public Image materialImageChurch;
+	public Image materialImageCongregation;
+	public Image socialImage;
+	public Image financialImage;
+	public Image healthImage;
+	public Image spiritualImage;
 
 	void Awake () {
 		s = this;
 	}
 	
 	public void Generate() {
-		population = new Person[size];
+		population = new List<Person>();
 		for(int i = 0; i < size; i++) {
 			Person thisPerson = new Person();
 			thisPerson.id = i;
 			thisPerson.awareness = i/size;
-			population[i] = thisPerson;
+			population.Add(thisPerson);
 		}
 	}
 
 	public void Members() {
 		members = new List<Person>();
-		moreCommunity = 0f;
-		lessCommunity = 0f;
-		moreMoral = 0f;
-		lessMoral = 0f;
-		morePiety = 0f;
-		lessPiety = 0f;
-		foreach(Person p in population) {
-			if( p.community[0] > Church.s.community) moreCommunity += 1.0f/size;
-			if( p.community[1] < Church.s.community) lessCommunity += 1.0f/size;
-			if( p.moral[0] > Church.s.moral) moreMoral += 1.0f/size;
-			if( p.moral[1] < Church.s.moral) lessMoral += 1.0f/size;
-			if( p.piety[0] > Church.s.piety) morePiety += 1.0f/size;
-			if( p.piety[1] < Church.s.piety) lessPiety += 1.0f/size;
+		dogmatic = 0f;
+		material = 0f;
+		social = 0f;
+		financial = 0f;
+		health = 0f;
+		spiritual = 0f;
+		foreach(Person p in population.ToArray()) {
+			dogmatic += p.dogmatic / population.Count;
+			material += p.material / population.Count;
+			social += p.social / population.Count;
+			financial += p.financial / population.Count;
+			health += p.health / population.Count;
+			spiritual += p.spiritual / population.Count;
 
-			if(Church.s.community >= p.community[0] && Church.s.community <= p.community[1] &&
-				Church.s.moral >= p.moral[0] && Church.s.moral <= p.moral[1] &&
-				Church.s.piety >= p.piety[0] && Church.s.piety <= p.piety[1] &&
-				Church.s.awareness >= p.awareness) {
-				members.Add(p);
-			}
+			// run update function for Persons
+			p.RefreshNeeds();
+			p.RefreshMembership();
 		}
 
-		moreCommunityImage.fillAmount = moreCommunity;
-		lessCommunityImage.fillAmount = lessCommunity;
-		moreMoralImage.fillAmount = moreMoral;
-		lessMoralImage.fillAmount = lessMoral;
-		morePietyImage.fillAmount = morePiety;
-		lessPietyImage.fillAmount = lessPiety;
+		dogmaticImageChurch.fillAmount = Church.s.dogmatic;
+		dogmaticImageCongregation.fillAmount = dogmatic;
+		materialImageChurch.fillAmount = Church.s.material;
+		materialImageCongregation.fillAmount = material;
+		socialImage.fillAmount = social;
+		financialImage.fillAmount = financial;
+		healthImage.fillAmount = health;
+		spiritualImage.fillAmount = spiritual;
 
 		print("members: " + members.Count);
 	}

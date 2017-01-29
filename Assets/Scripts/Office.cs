@@ -36,7 +36,6 @@ public class Office : MonoBehaviour {
 
 	public void Tea() {
 		NewAction();
-		Church.s.awareness += 0.01f;
 		feedback.text = "Awareness + 1%";
 	}
 
@@ -54,7 +53,6 @@ public class Office : MonoBehaviour {
 
 	public void Hospital() {
 		NewAction();
-		Church.s.halos += 1;
 		feedback.text = "good deeds +1";
 	}
 
