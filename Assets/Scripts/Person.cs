@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Person {
-	public int id;
 	public float age;
 	public string gender;
 	public string name;
@@ -11,19 +10,19 @@ public class Person {
 	private string[] malenames = {"Bob","Dave","John","Fred","Simon","Paul","Martin","Mark"};
 	private string[] femalenames = {"Catherine","Sarah","Emma","Rose","Claire","Mary","Nicole"};
 	private string[] surnames = {"Smith","Jones","Higgins","Davis","Eden","Roberts","Griffiths"};
-	public float awareness;
-	public bool attendee;
-	public float happiness;
+	public float mood;
 	// theology
 	public float dogmatic;
 	public float material;
 	//needs
 	public float social;
-	public float financial;
+	public float money;
 	public float health;
 	public float spiritual;
-	public float neediness;
 	public float theologicalDistance;
+	private float theologicalWeighting = 0.25f;
+	public float neediness;
+	private float needinessWeighting = 1f;
 	public List<Need> needs;
 
 	public Person () {
@@ -33,19 +32,15 @@ public class Person {
 		name = namelookup[Random.Range(0,namelookup.Length)];
 		name += " " + surnames[Random.Range(0,surnames.Length)];
 		wealth = Random.Range(1,11);
-		attendee = false;
 
 		dogmatic = Random.Range(0f,1f);
 		material = Random.Range(0f,1f);
-		social = 0f;
-		financial = 0f;
-		health = 0f;
-		spiritual = 0f;
 
 		needs = new List<Need>();
-		int num = Random.Range(1,4);
+		int num = Random.Range(0,3);
 		for(int i = 0; i < num; i++) {
 			Need thisNeed = new Need();
+			thisNeed.myPerson = this;//
 			needs.Add(thisNeed);
 		}
 
@@ -53,52 +48,39 @@ public class Person {
 		foreach(Need n in needs) {
 			Debug.Log(n.description);
 		}
-		RefreshNeeds();
-		RefreshNeeds();
+		RefreshMood();
+		if (mood >= 0.5f) {
+			Members.s.body.Add(this);
+		}
 	} 
 
-	public void RefreshNeeds() {
+	public void RefreshMood() {
+		// updates mood
 		theologicalDistance = Mathf.Abs(dogmatic - Church.s.dogmatic);
 		theologicalDistance += Mathf.Abs(material - Church.s.material);
+		theologicalDistance = theologicalDistance * theologicalWeighting;
+
+		// refresh impact of needs
+		social = 0f;
+		money  = 0f;
+		health = 0f;
+		spiritual = 0f;
 
 		foreach(Need n in needs) {
-			switch(n.type)
-			{
-			case 0:
-				social += n.severity;
-				break;
-			case 1:
-				financial += n.severity;
-				break;
-			case 2:
-				health += n.severity;
-				break;
-			case 3:
-				spiritual += n.severity;
-				break;
-			}
+			n.Refresh();
 		}
-		neediness = social + financial + health + spiritual;
-		if(attendee) happiness -=neediness;
+
+		neediness = (social + money + health + spiritual) * needinessWeighting * -1f;
+
+		mood = 1f - theologicalDistance - neediness;
+		Debug.Log("mood: " + mood.ToString("0.00") + " need: " + neediness.ToString("0.00") + " beliefs: " + theologicalDistance.ToString("0.00"));
 	}
 
 	public void RefreshMembership() {
-		if(!attendee && theologicalDistance < neediness) {
-			happiness = 1f;
-			attendee = true;
-			Congregation.s.members.Add(this);
-			Debug.Log(name + " joined the congregation");
-		}
-		if(attendee && happiness < 0) {
-			attendee = false;
-			Congregation.s.members.Remove(this);
-			Congregation.s.population.Remove(this);
+		// members leave Church if mood is too low
+		if(mood < 0f) {
+			Members.s.body.Remove(this);
 			Debug.Log(name + " left the congregation");
 		}
 	}
-	// update function
-	// if neediness > theologicalDistance >> join congregation
-	// once joined, if neediness + theologicalDistance > belonging >> leave congregatinon
-	// update neediness level based on needs
-	// 
 }

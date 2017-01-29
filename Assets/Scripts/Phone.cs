@@ -44,10 +44,10 @@ public class Phone : MonoBehaviour {
 
 			// determine message type
 			messageType = Random.Range(0,3);
-			memberNum = Random.Range(0,Congregation.s.members.Count);
+			memberNum = Random.Range(0,Members.s.body.Count);
 
 			thisMessage.type = messageType;
-			thisMessage.name = Congregation.s.members[memberNum].name;
+			thisMessage.name = Members.s.body[memberNum].name;
 			allMessages.Add(thisMessage.id, thisMessage);
 			thisMessage.Setup();
 			count++;
@@ -57,10 +57,10 @@ public class Phone : MonoBehaviour {
 	public void pressA() {
 		switch(type) {
 		case 0:
-			Church.s.social += 0.05f;
+			Church.s.socialTemp += 0.05f;
 			break;
 		case 1: 
-			Church.s.financial += 0.05f;
+			Church.s.moneyTemp += 0.05f;
 			break;
 		case 2:
 			Church.s.dogmatic += 0.05f;
@@ -73,10 +73,10 @@ public class Phone : MonoBehaviour {
 	public void pressB() {
 		switch(type) {
 		case 0:
-			Church.s.social -= 0.05f;
+			Church.s.socialTemp -= 0.05f;
 			break;
 		case 1: 
-			Church.s.financial -= 0.05f;
+			Church.s.moneyTemp -= 0.05f;
 			break;
 		case 2:
 			Church.s.dogmatic -= 0.05f;

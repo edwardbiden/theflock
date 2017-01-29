@@ -11,15 +11,18 @@ public class Church : MonoBehaviour {
 	public float dogmatic;
 	public float material;
 	// needs
-	public float social;
-	public float financial;
-	public float health;
-	public float spiritual;
+	public float socialPermanent;
+	public float moneyPermanent;
+	public float healthPermanent;
+	public float spiritualPermanent;
+	public float socialTemp;
+	public float moneyTemp;
+	public float healthTemp;
+	public float spiritualTemp;
 
 	// UI elements
 	public Text cashText;
 	public Text capacityText;
-	public Text populationText;
 	public Text memberText;
 	public Button capacityButton;
 	public Text capacityButtonText;
@@ -35,10 +38,11 @@ public class Church : MonoBehaviour {
 		dogmatic = 0.5f;
 		material = 0.5f;
 
-		social = 0f;
-		financial = 0f;
-		health = 0f;
-		spiritual = 0f;
+		socialPermanent = 0f;
+		moneyPermanent = 0f;
+		healthPermanent = 0f;
+		spiritualPermanent = 0f;
+		ResetTempEffects();
 
 		capacityAmount = 100;
 	}
@@ -46,8 +50,7 @@ public class Church : MonoBehaviour {
 	public void Refresh() {
 		cashText.text = "Cash: " + cash.ToString();
 		capacityText.text = "Capacity: " + capacity.ToString();
-		populationText.text = "Population: " + Congregation.s.population.Count.ToString();
-		memberText.text = "Membership: " + Congregation.s.members.Count.ToString();
+		memberText.text = "Membership: " + Members.s.body.Count.ToString();
 		capacityButton.interactable = cash >= capacityAmount ? true : false;
 		capacityButtonText.text = "Capacity ++ \n$" + capacityAmount.ToString("#,##0");
 	}
@@ -57,5 +60,12 @@ public class Church : MonoBehaviour {
 		capacity += 5;
 		capacityAmount = capacityAmount*2;
 		Refresh();
+	}
+
+	public void ResetTempEffects() {
+		socialTemp = 0f;
+		moneyTemp = 0f;
+		healthTemp = 0f;
+		spiritualTemp = 0f;
 	}
 }

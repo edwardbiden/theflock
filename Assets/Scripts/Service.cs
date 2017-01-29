@@ -25,7 +25,7 @@ public class Service : MonoBehaviour {
 		foreach(GameObject g in attendees) Destroy(g);
 		attendees = new List<GameObject>();
 		pews = 0;
-		maxCongregation = Mathf.Min(Congregation.s.members.Count, Church.s.capacity);
+		maxCongregation = Mathf.Min(Members.s.body.Count, Church.s.capacity);
 		print("attendees this week: " + maxCongregation);
 		StartCoroutine(FillPews());
 		feedback.text = "";
@@ -39,9 +39,9 @@ public class Service : MonoBehaviour {
 			thisPerson.transform.SetParent(pewPanel.transform);
 			thisPerson.transform.localScale = new Vector3(1, 1, 1);
 			Text[] myName = thisPerson.GetComponentsInChildren<Text>();
-			myName[0].text = Congregation.s.members[pews].name;
+			myName[0].text = Members.s.body[pews].name;
 			attendees.Add(thisPerson);
-			collection += Congregation.s.members[pews].wealth;
+			collection += Members.s.body[pews].wealth;
 //			print(myName[0].text + " " + Congregation.s.members[pews].gender + ":" + Congregation.s.members[pews].age.ToString("0"));
 			pews++;
 			yield return new WaitForSeconds(0.05f);
@@ -49,7 +49,7 @@ public class Service : MonoBehaviour {
 		int finalCollection = Mathf.FloorToInt(collection * sermonEffectiveness);
 		Church.s.cash += finalCollection;
 		feedback.text = "Collection: $" + finalCollection.ToString();
-		int seatsEmpty = Mathf.Max(Church.s.capacity - Congregation.s.members.Count, 0);
+		int seatsEmpty = Mathf.Max(Church.s.capacity - Members.s.body.Count, 0);
 		feedback.text += "\n" + seatsEmpty.ToString() + " pews empty";
 		proceed.interactable = true;
 	}

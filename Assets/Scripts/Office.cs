@@ -32,28 +32,33 @@ public class Office : MonoBehaviour {
 		Service.s.sermonEffectiveness = 1;
 		foreach(Button b in actionButtons) b.interactable = true;
 		proceed.interactable = false;
+
+		// reset temp effects
+		Church.s.ResetTempEffects();
 	}
 
 	public void Tea() {
 		NewAction();
-		feedback.text = "Awareness + 1%";
+		Church.s.socialTemp += 0.03f;
+		feedback.text = "Temp Social boost: " + Church.s.socialTemp.ToString("0.00");
 	}
 
-	public void TV() {
+	public void Fundraise() {
 		NewAction();
-		Service.s.sermonEffectiveness += Random.Range(0,0.1f);
-		int effectivenessShown = Mathf.FloorToInt(Service.s.sermonEffectiveness * 100);
-		feedback.text = "collection effectiveness: " + effectivenessShown.ToString() + "%";
-	}
-
-	public void Bible() {
-		NewAction();
-		feedback.text = "you are feeling very devout";
+		Church.s.moneyTemp += 0.03f;
+		feedback.text = "Temp Money boost: " + Church.s.moneyTemp.ToString("0.00");
 	}
 
 	public void Hospital() {
 		NewAction();
-		feedback.text = "good deeds +1";
+		Church.s.healthTemp += 0.03f;
+		feedback.text = "Temp Health boost: " + Church.s.healthTemp.ToString("0.00");
+	}
+
+	public void Bible() {
+		NewAction();
+		Church.s.spiritualTemp += 0.03f;
+		feedback.text = "Temp Spiritual boost: " + Church.s.spiritualTemp.ToString("0.00");
 	}
 
 	public void NewAction() {
@@ -62,8 +67,10 @@ public class Office : MonoBehaviour {
 		today = weekdays[dayOfWeek];
 		todayText.text = today;
 		Phone.s.todayText.text = today;
-		if(dayOfWeek == 5) foreach(Button b in actionButtons) b.interactable = false;
-		if(dayOfWeek == 5) foreach(KeyValuePair<int, Message> myMessage in Phone.s.allMessages) Phone.s.allMessages[myMessage.Key].button.interactable = false;
-		proceed.interactable = true;
+		if(dayOfWeek == 5) {
+			foreach(Button b in actionButtons) b.interactable = false;
+			foreach(KeyValuePair<int, Message> myMessage in Phone.s.allMessages) Phone.s.allMessages[myMessage.Key].button.interactable = false;
+			proceed.interactable = true;
+		}
 	}
 }

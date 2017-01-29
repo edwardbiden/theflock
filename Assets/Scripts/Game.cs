@@ -24,8 +24,8 @@ public class Game : MonoBehaviour {
 
 	public void NewGame() {
 		Church.s.Generate();
-		Congregation.s.Generate();
-		Congregation.s.Members();
+		Members.s.Generate();
+		Members.s.Refresh();
 		GoToChurch();
 	}
 
@@ -41,7 +41,6 @@ public class Game : MonoBehaviour {
 	}
 
 	public void GoToService() {
-		Congregation.s.Members();
 		Service.s.BeginService();
 		foreach(GameObject g in panels) g.SetActive(false);
 		servicePanel.SetActive(true);
@@ -49,6 +48,7 @@ public class Game : MonoBehaviour {
 
 	public void GoToChurch() {
 		Church.s.Refresh();
+		Members.s.Refresh();
 		foreach(GameObject g in panels) g.SetActive(false);
 		churchPanel.SetActive(true);
 	}
